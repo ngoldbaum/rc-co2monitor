@@ -35,7 +35,7 @@ $ sudo udevadm control --reload-rules && udevadm trigger
 To check that everything is working, do the following:
 
 ```bash
-$ sudo python -c "import co2meter as co2;mon = co2.CO2Monitor();print(mon.info)"
+$ sudo python -c "import co2meter as co2;mon = co2.CO2monitor();print(mon.info)"
 ```
 
 Assuming everything is working correctly, you should see output like this:
@@ -46,4 +46,3 @@ Assuming everything is working correctly, you should see output like this:
 
 Note that I'm using a CO2 meter from co2meter.com, specifically [this
 one](https://www.co2meter.com/collections/desktop/products/co2mini-co2-indoor-air-quality-monitor).
-

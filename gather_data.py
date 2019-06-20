@@ -3,7 +3,11 @@
 import time
 import csv
 import co2meter
+import os
 
+if not os.path.exists('co2data.csv'):
+    with open('co2data.csv') as f:
+        f.write('Time,Concentration,Temperature')
 
 while True:
     mon = co2meter.CO2monitor()

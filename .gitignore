@@ -1,3 +1,5 @@
 *~
 \#*\#
-co2data.csv
+*.csv
+__pycache__
+webapp/static/co2.png

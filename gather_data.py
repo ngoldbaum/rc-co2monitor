@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
 from palettable.cartocolors.qualitative import Antique_2 as cmap
 
+
 def get_data():
     now = pandas.Timestamp.now()
     begin = now - pandas.Timedelta("4 days")
@@ -63,7 +64,7 @@ def make_plot():
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%m-%d-%H"))
     ax2.set_xlabel("Time")
 
-    ax1.plot(time, concentration, ".", markersize=0.5, color=cmap.mpl_colors[0])
+    ax1.plot(time, concentration, color=cmap.mpl_colors[0])
     ax1.set_ylim(0, 3000)
     ax1.set_ylabel(r"$\rm{CO}_2$ Concentration (PPM)")
     ax1.grid()
@@ -72,7 +73,7 @@ def make_plot():
     climits = [21.11, 26.67]
 
     ax2.plot(
-        time, 9/5*temperature + 32, ".", color=cmap.mpl_colors[1], markersize=0.5
+        time, 9 / 5 * temperature + 32, ".", markersize=0.7, color=cmap.mpl_colors[1]
     )
     ax2.set_ylim(flimits[0], flimits[1])
     ax2.set_ylabel(r"Temperature ($\circ\rm{F}$)")
@@ -81,7 +82,9 @@ def make_plot():
     ax_c.set_ylim(climits[0], climits[1])
     ax_c.set_ylabel(r"($\circ\rm{C}$)")
 
-    fig.savefig("webapp/static/co2.png")
+    if not os.path.isdir("webapp/static"):
+        os.mkdir("webapp/static")
+    fig.savefig("webapp/static/co2.png", dpi=200)
     plt.close()
 
 

@@ -104,6 +104,6 @@ if __name__ == "__main__":
             writer = csv.writer(f)
             writer.writerow(row)
         make_plot()
-        tsleep = 10 - (time.time() - tb)
+        tsleep = 60 - (time.time() - tb)
         if tsleep > 0:
             time.sleep(tsleep)

@@ -76,7 +76,7 @@ def make_plot():
     climits = [21.11, 26.67]
 
     ax2.plot(
-        time, 9 / 5 * temperature + 32, ".", markersize=0.7, color=cmap.mpl_colors[1]
+        time, 9 / 5 * temperature + 32, ".", markersize=0.4, color=cmap.mpl_colors[1]
     )
     ax2.set_ylim(flimits[0], flimits[1])
     ax2.set_ylabel(r"Temperature ($\circ\rm{F}$)")
@@ -89,7 +89,7 @@ def make_plot():
     
     if not os.path.isdir("webapp/static"):
         os.mkdir("webapp/static")
-    fig.savefig("webapp/static/co2.png", dpi=200)
+    fig.savefig("webapp/static/co2.png", dpi=100)
     plt.close()
 
 

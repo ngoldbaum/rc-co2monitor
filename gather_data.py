@@ -11,14 +11,7 @@ matplotlib.use("agg")
 
 from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
-from pandas.plotting import register_matplotlib_converters
-
-register_matplotlib_converters()
-
 from palettable.cartocolors.qualitative import Antique_2 as cmap
-
-import unyt as u
-
 
 def get_data():
     now = pandas.Timestamp.now()
@@ -28,8 +21,8 @@ def get_data():
     concentration = pandas.Series()
     temperature = pandas.Series()
     for i in range(5):
-        dtime = begin + pandas.Timedelta(f"{i} days")
-        fname = f"{dtime.year}-{dtime.month}-{dtime.day}.csv"
+        dtime = begin + pandas.Timedelta("{} days".format(i))
+        fname = "{}-{}-{}.csv".format(dtime.year, dtime.month, dtime.day)
         if not os.path.exists(fname):
             continue
         data = pandas.read_csv(fname)
@@ -39,7 +32,7 @@ def get_data():
     time = pandas.to_datetime(time, unit="s")
     time = time.dt.tz_localize("UTC").dt.tz_convert("US/Eastern")
     concentration = np.array(concentration)
-    temperature = np.array(temperature) * u.degC
+    temperature = np.array(temperature)
     return time, concentration, temperature
 
 
@@ -75,20 +68,18 @@ def make_plot():
     ax1.set_ylabel(r"$\rm{CO}_2$ Concentration (PPM)")
     ax1.grid()
 
-    flimits = [70, 80] * u.degF
-    climits = flimits.to("degC")
-
-    flimits, climits = flimits.d, climits.d
+    flimits = [70, 80]
+    climits = [21.11, 26.67]
 
     ax2.plot(
-        time, temperature.to("degF"), ".", color=cmap.mpl_colors[1], markersize=0.5
+        time, 9/5*temperature + 32, ".", color=cmap.mpl_colors[1], markersize=0.5
     )
     ax2.set_ylim(flimits[0], flimits[1])
-    ax2.set_ylabel(fr"Temperature (${u.degF.latex_repr}$)")
+    ax2.set_ylabel(r"Temperature ($\circ\rm{F}$)")
     ax2.grid()
 
     ax_c.set_ylim(climits[0], climits[1])
-    ax_c.set_ylabel(fr"(${u.degC.latex_repr}$)")
+    ax_c.set_ylabel(r"($\circ\rm{C}$)")
 
     fig.savefig("co2.png")
     plt.close()
@@ -101,7 +92,7 @@ if __name__ == "__main__":
         tb = time.time()
         mon = co2meter.CO2monitor()
         now = pandas.Timestamp.now()
-        output_filename = f"{now.year}-{now.month}-{now.day}.csv"
+        output_filename = "{}-{}-{}.csv".format(now.year, now.month, now.day)
         if not os.path.exists(output_filename):
             with open(output_filename, "w") as f:
                 f.write("Time,Concentration,Temperature\n")

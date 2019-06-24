@@ -38,7 +38,7 @@ def get_data():
 
 
 def make_plot():
-    fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(8, 6))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
 
     ax_c = ax2.twinx()
 
@@ -52,17 +52,20 @@ def make_plot():
 
     time, concentration, temperature = get_data()
 
-    # shared between axes
-    ax1.set_xlim(begin, now + 0.5 * day)
     ticks = [today - i * day for i in range(4, -2, -1)]
     minorticks = [today - day * (i + 0.5) for i in range(4, -2, -1)]
+
+    ax1.set_xlim(begin, now + 0.5 * day)
+    ax1.set_xlabel("Time")
     ax1.set_xticks(ticks)
     ax1.set_xticks(minorticks, minor=True)
     ax1.xaxis.set_major_formatter(mdates.DateFormatter("%m-%d-%H"))
+
+    ax2.set_xlim(begin, now + 0.5 * day)
+    ax2.set_xlabel("Time")
     ax2.set_xticks(ticks)
     ax2.set_xticks(minorticks, minor=True)
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%m-%d-%H"))
-    ax2.set_xlabel("Time")
 
     ax1.plot(time, concentration, color=cmap.mpl_colors[0])
     ax1.set_ylim(0, 3000)
@@ -82,6 +85,8 @@ def make_plot():
     ax_c.set_ylim(climits[0], climits[1])
     ax_c.set_ylabel(r"($\circ\rm{C}$)")
 
+    plt.tight_layout()
+    
     if not os.path.isdir("webapp/static"):
         os.mkdir("webapp/static")
     fig.savefig("webapp/static/co2.png", dpi=200)

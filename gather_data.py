@@ -81,7 +81,7 @@ def make_plot():
     ax_c.set_ylim(climits[0], climits[1])
     ax_c.set_ylabel(r"($\circ\rm{C}$)")
 
-    fig.savefig("co2.png")
+    fig.savefig("webapp/static/co2.png")
     plt.close()
 
 

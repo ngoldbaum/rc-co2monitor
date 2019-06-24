@@ -42,9 +42,11 @@ def make_plot():
 
     ax_c = ax2.twinx()
 
-    now = pandas.Timestamp.now()
+    now = pandas.Timestamp.now(tz="US/Eastern")
 
-    today = pandas.Timestamp(year=now.year, month=now.month, day=now.day)
+    today = pandas.Timestamp(
+        year=now.year, month=now.month, day=now.day, tz="US/Eastern"
+    )
 
     begin = now - pandas.Timedelta("4.5 days")
 
@@ -86,7 +88,7 @@ def make_plot():
     ax_c.set_ylabel(r"($\circ\rm{C}$)")
 
     plt.tight_layout()
-    
+
     if not os.path.isdir("webapp/static"):
         os.mkdir("webapp/static")
     fig.savefig("webapp/static/co2.png", dpi=100)

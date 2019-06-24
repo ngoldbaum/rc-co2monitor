@@ -48,6 +48,8 @@ def make_plot():
         year=now.year, month=now.month, day=now.day, tz="US/Eastern"
     )
 
+    today = today.tz_localize("US/Eastern")
+
     begin = now - pandas.Timedelta("4.5 days")
 
     day = pandas.Timedelta("1 days")

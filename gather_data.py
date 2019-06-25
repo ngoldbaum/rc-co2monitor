@@ -16,12 +16,12 @@ from palettable.cartocolors.qualitative import Antique_2 as cmap
 
 def get_data():
     now = pandas.Timestamp.now()
-    begin = now - pandas.Timedelta("4 days")
+    begin = now - pandas.Timedelta("4.5 days")
     files_to_read = [""]
     time = pandas.Series()
     concentration = pandas.Series()
     temperature = pandas.Series()
-    for i in range(5):
+    for i in range(6):
         dtime = begin + pandas.Timedelta("{} days".format(i))
         fname = "{}-{}-{}.csv".format(dtime.year, dtime.month, dtime.day)
         if not os.path.exists(fname):
@@ -48,7 +48,11 @@ def make_plot():
         year=now.year, month=now.month, day=now.day, tz="US/Eastern"
     )
 
-    today = today.tz_localize("US/Eastern")
+    # handle bug in old pandas version on rpi
+    try:
+        today = today.tz_localize("US/Eastern")
+    except TypeError:
+        pass
 
     begin = now - pandas.Timedelta("4.5 days")
 

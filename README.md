@@ -46,3 +46,20 @@ Assuming everything is working correctly, you should see output like this:
 
 Note that I'm using a CO2 meter from co2meter.com, specifically [this
 one](https://www.co2meter.com/collections/desktop/products/co2mini-co2-indoor-air-quality-monitor).
+
+## Starting the liveplotter
+
+You can generate a running stream of measurements (one a minute by default) and
+a liveplot by doing
+
+```bash
+$ sudo python3 gather_data.py
+```
+
+To serve the liveplot on a webpage via flask, do:
+
+```bash
+$ cd webapp
+$ export FLASK_APP=webapp.py
+$ flask run --host=0.0.0.0
+```
